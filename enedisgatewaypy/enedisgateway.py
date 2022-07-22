@@ -53,9 +53,9 @@ class EnedisGateway:
         """Return offpeak status."""
         if self.has_offpeak:
             start_time = start.time()
-            for range in self.offpeaks:
-                starting = dt.strptime(range[0], "%HH%M").time()
-                ending = dt.strptime(range[1], "%HH%M").time()
+            for range_time in self.offpeaks:
+                starting = dt.strptime(range_time[0], "%HH%M").time()
+                ending = dt.strptime(range_time[1], "%HH%M").time()
                 if start_time > starting and start_time <= ending:
                     return True
         return False
