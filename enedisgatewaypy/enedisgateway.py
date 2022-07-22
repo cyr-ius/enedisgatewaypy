@@ -8,20 +8,8 @@ from datetime import datetime as dt
 
 import requests
 from requests.exceptions import RequestException
-
-URL = "https://enedisgateway.tech"
-API_URL = f"{URL}/api"
-MANUFACTURER = "Enedis"
-PRODUCTION = "Production"
-PRODUCTION_DAILY = "production_daily"
-PRODUCTION_DETAIL = "production_detail"
-CONSUMPTION = "Consumption"
-CONSUMPTION_DAILY = "consumption_daily"
-CONSUMPTION_DETAIL = "consumption_detail"
-HP = "peak_hours"
-HC = "offpeak_hours"
-DEFAULT_HP_PRICE = 0.1841
-DEFAULT_HC_PRICE = 0.1470
+from .exceptions import EnedisException, EnedisGatewayException
+from .const import API_URL
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -57,13 +45,13 @@ class EnedisGateway:
         except RequestException as error:
             raise EnedisException("Request failed") from error
 
-    def hass_offpeak(self):
+    def has_offpeak(self):
         """Has offpeak hours."""
         return len(self.offpeak) > 0
 
     def check_offpeak(self, start: datetime):
         """Return offpeak status."""
-        if self.hass_offpeak:
+        if self.has_offpeak:
             start_time = start.time()
             for range in self.offpeaks:
                 starting = dt.strptime(range[0], "%HH%M").time()
@@ -138,16 +126,3 @@ class EnedisGateway:
                 "end": f"{end}",
             }
         return await self._async_make_request(payload)
-
-
-class EnedisException(Exception):
-    """Enedis exception."""
-
-
-class EnedisGatewayException(EnedisException):
-    """Enedis gateway error."""
-
-    def __init__(self, message):
-        """Initialize."""
-        super().__init__(message)
-        _LOGGER.error(message)

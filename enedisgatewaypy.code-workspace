@@ -9,7 +9,13 @@
     ],
     "python.pythonPath": "/media/datas/hass-integrations/heatzypy/.venv/bin/python",
     "cSpell.words": [
-      "aiohttp"
+      "aiohttp",
+      "enedis",
+      "Enedis",
+      "enedisgateway",
+      "enedisgatewaypy",
+      "offpeak",
+      "offpeaks"
     ]
   },
   "launch": {

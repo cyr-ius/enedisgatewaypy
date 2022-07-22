@@ -43,7 +43,7 @@ setup(
     license='GPL-3',
     include_package_data=True,
     url='https://github.com/cyr-ius/enedisgatewaypy/tree/master/enedisgatewaypy',
-    keywords='heatzy async',
+    keywords='enedis linky async',
     classifiers=[
         'Programming Language :: Python',
         'Development Status :: 5 - Production/Stable',
