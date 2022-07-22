@@ -47,7 +47,7 @@ class EnedisGateway:
 
     def has_offpeak(self):
         """Has offpeak hours."""
-        return len(self.offpeak) > 0
+        return len(self.offpeaks) > 0
 
     def check_offpeak(self, start: datetime):
         """Return offpeak status."""
