@@ -22,7 +22,6 @@ class EnedisGateway:
         self.pdl = str(pdl)
         self.token = token
         self.session = session if session else requests.Session()
-        self.has_offpeak = False
         self.offpeaks = []
 
     async def _async_make_request(self, payload):
