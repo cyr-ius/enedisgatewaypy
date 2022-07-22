@@ -29,7 +29,7 @@ class EnedisGateway:
         """Request session."""
         headers = {"Authorization": self.token, "Content-Type": "application/json"}
         try:
-            _LOGGER.debug(f"Make request {payload}")
+            _LOGGER.debug(f"Make request %s", payload)
             resp = await self.session.request(
                 method="POST", url=API_URL, json=payload, headers=headers, timeout=5
             )
