@@ -46,7 +46,7 @@ class EnedisByPDL(EnedisGateway):
     def __init__(self, pdl: str, token: str, session: ClientSession = None):
         """Initialize."""
         super().__init__(pdl, token)
-        self.offpeaks: list(str, str) = None
+        self.offpeaks: list(str) = None
 
     async def async_fetch_datas(self, service: str, start: datetime, end: datetime) -> ClientResponse:
         """Get datas."""
