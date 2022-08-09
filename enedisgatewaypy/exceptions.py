@@ -7,14 +7,9 @@ class EnedisException(Exception):
     """Enedis exception."""
 
 
-class EnedisLimitReached(Exception):
+class LimitReached(EnedisException):
     """Limit reached exception."""
 
 
-class EnedisGatewayException(EnedisException):
+class GatewayException(EnedisException):
     """Enedis gateway error."""
-
-    def __init__(self, message):
-        """Initialize."""
-        super().__init__(message)
-        _LOGGER.error(message)

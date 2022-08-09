@@ -4,7 +4,7 @@ from __future__ import annotations
 import logging
 
 from aiohttp import ClientSession, ClientError, ClientResponse
-from .exceptions import EnedisException, EnedisGatewayException, EnedisLimitReached
+from .exceptions import EnedisException, GatewayException, LimitReached
 
 URL = "https://enedisgateway.tech"
 
@@ -50,10 +50,10 @@ class EnedisAuth:
                 "limit_reached",
                 "enedis_return_ko",
             ]:
-                raise EnedisLimitReached(response.get("description"))
+                raise LimitReached(response.get("description"))
 
             if "error" in response:
-                raise EnedisGatewayException(response.get("error"))
+                raise GatewayException(response.get("error"))
 
             return response
         except ClientError as error:
