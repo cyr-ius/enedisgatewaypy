@@ -89,7 +89,7 @@ class EnedisByPDL(EnedisGateway):
 
     async def async_has_offpeak(self) -> bool:
         """Has offpeak hours."""
-        if self.offpeaks is None:
+        if not self.offpeaks:
             await self.async_get_contract()
         return len(self.offpeaks) > 0
 
