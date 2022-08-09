@@ -7,6 +7,10 @@ class EnedisException(Exception):
     """Enedis exception."""
 
 
+class EnedisLimitReached(Exception):
+    """Limit reached exception."""
+
+
 class EnedisGatewayException(EnedisException):
     """Enedis gateway error."""
 
