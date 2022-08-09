@@ -40,6 +40,10 @@ class EnedisGateway:
 
 class EnedisByPDL(EnedisGateway):
     """Get data of pdl."""
+    def __init__(self, pdl, token, session=None):
+        """Initialize."""
+        super().__init__(pdl, token)
+        self.offpeaks = None
 
     async def async_fetch_datas(self, service, start, end):
         """Get datas."""
@@ -88,7 +92,7 @@ class EnedisByPDL(EnedisGateway):
 
     async def async_check_offpeak(self, start: datetime):
         """Return offpeak status."""
-        if await self.async_has_offpeak is True:
+        if await self.async_has_offpeak() is True:
             start_time = start.time()
             for range_time in self.offpeaks:
                 starting = dt.strptime(range_time[0], "%HH%M").time()
