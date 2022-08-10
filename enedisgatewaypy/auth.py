@@ -42,18 +42,14 @@ class EnedisAuth:
             resp = await self.session.request(
                 method, f"{URL}/{path}", **kwargs, headers=headers, timeout=5
             )
-
             response = await resp.json()
             _LOGGER.debug("Response %s", response)
 
-            if "tag" in response and response["tag"] in [
-                "limit_reached",
-                "enedis_return_ko",
-            ]:
+            if "tag" in response and response["tag"] in ["limit_reached"]:
                 raise LimitReached(response.get("description"))
 
-            if "error" in response:
-                raise GatewayException(response.get("error"))
+            if "alert_user" in response:
+                raise GatewayException(response.get("description"))
 
             return response
         except ClientError as error:

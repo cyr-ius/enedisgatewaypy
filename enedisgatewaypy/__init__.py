@@ -5,5 +5,5 @@ from .enedisgateway import EnedisGateway, EnedisByPDL
 from .exceptions import EnedisException, LimitReached, GatewayException
 
 name = "EnedisGateway"
-__version__ = "1.2.0"
+__version__ = "1.2.1"
 __all__ = ["EnedisGateway", "EnedisByPDL", "EnedisException", "LimitReached", "GatewayException"]
