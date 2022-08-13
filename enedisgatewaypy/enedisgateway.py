@@ -8,7 +8,7 @@ from datetime import datetime as dt
 
 from aiohttp import ClientResponse, ClientSession
 
-from .auth import EnedisAuth
+from .auth import EnedisAuth, TIMEOUT
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -16,7 +16,7 @@ _LOGGER = logging.getLogger(__name__)
 class EnedisGateway:
     """Class for Enedis Gateway API."""
 
-    def __init__(self, pdl: str, token: str, session: ClientSession = None):
+    def __init__(self, pdl: str, token: str, session: ClientSession = None, timeout: int = TIMEOUT):
         """Init."""
         self.auth = EnedisAuth(token, session)
         self.pdl = str(pdl)
@@ -43,15 +43,18 @@ class EnedisGateway:
 
 class EnedisByPDL(EnedisGateway):
     """Get data of pdl."""
-    def __init__(self, pdl: str, token: str, session: ClientSession = None):
+    def __init__(self, pdl: str, token: str, session: ClientSession = None, timeout: int = TIMEOUT):
         """Initialize."""
-        super().__init__(pdl, token, session)
+        super().__init__(pdl, token, session, timeout)
         self.offpeaks = []
 
     async def async_fetch_datas(self, service: str, start: datetime, end: datetime) -> ClientResponse:
         """Get datas."""
         payload = {
-            "type": service, "usage_point_id": self.pdl, "start": start, "end": end
+            "type": service,
+            "usage_point_id": self.pdl,
+            "start": start.strftime("%Y-%m-%d"),
+            "end": end.strftime("%Y-%m-%d"),
         }
         return await self.auth.request(json=payload)
 
@@ -60,8 +63,8 @@ class EnedisByPDL(EnedisGateway):
         payload = {
             "type": "daily_consumption_max_power",
             "usage_point_id": self.pdl,
-            "start": start,
-            "end": end,
+            "start": start.strftime("%Y-%m-%d"),
+            "end": end.strftime("%Y-%m-%d"),
         }
         return await self.auth.request(json=payload)
 

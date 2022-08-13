@@ -7,6 +7,7 @@ from aiohttp import ClientSession, ClientError, ClientResponse
 from .exceptions import EnedisException, GatewayException, LimitReached
 
 URL = "https://enedisgateway.tech"
+TIMEOUT = 5
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -14,9 +15,10 @@ _LOGGER = logging.getLogger(__name__)
 class EnedisAuth:
     """Class for Enedis Auth API."""
 
-    def __init__(self, token, session=None):
+    def __init__(self, token, session=None, timeout=TIMEOUT):
         """Init."""
         self.token = token
+        self.timeout = timeout
         self.session = session if session else ClientSession()
 
     async def async_close(self):
@@ -40,7 +42,7 @@ class EnedisAuth:
         try:
             _LOGGER.debug("Request %s", kwargs)
             resp = await self.session.request(
-                method, f"{URL}/{path}", **kwargs, headers=headers, timeout=5
+                method, f"{URL}/{path}", **kwargs, headers=headers, timeout=TIMEOUT
             )
             response = await resp.json()
             _LOGGER.debug("Response %s", response)
