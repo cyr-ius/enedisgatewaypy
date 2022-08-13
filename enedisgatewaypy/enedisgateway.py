@@ -18,7 +18,7 @@ class EnedisGateway:
 
     def __init__(self, pdl: str, token: str, session: ClientSession = None, timeout: int = TIMEOUT):
         """Init."""
-        self.auth = EnedisAuth(token, session)
+        self.auth = EnedisAuth(token, session, timeout)
         self.pdl = str(pdl)
 
     async def async_close(self) -> None:
