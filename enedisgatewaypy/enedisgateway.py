@@ -77,7 +77,7 @@ class EnedisByPDL(EnedisGateway):
             if usage_point.get("usage_point", {}).get("usage_point_id") == self.pdl:
                 contract = usage_point.get("contracts", {})
                 if offpeak_hours := contract.get("offpeak_hours"):
-                    contract["offpeaks"] = re.findall("(?:(\\w+)-(\\w+))+", offpeak_hours)
+                    self.offpeaks = re.findall("(?:(\\w+)-(\\w+))+", offpeak_hours)
         return contract
 
     async def async_get_address(self) -> dict(str, str):
