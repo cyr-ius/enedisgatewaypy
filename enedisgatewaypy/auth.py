@@ -42,7 +42,7 @@ class EnedisAuth:
         try:
             _LOGGER.debug("Request %s", kwargs)
             resp = await self.session.request(
-                method, f"{URL}/{path}", **kwargs, headers=headers, timeout=TIMEOUT
+                method, f"{URL}/{path}", **kwargs, headers=headers, timeout=self.timeout
             )
             response = await resp.json()
             _LOGGER.debug("Response %s", response)
