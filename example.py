@@ -5,7 +5,7 @@ import asyncio
 import logging
 
 from datetime import datetime, timedelta
-from enedisgatewaypy import EnedisByPDL, EnedisLimitReached
+from enedisgatewaypy import EnedisByPDL, EnedisException
 
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
@@ -25,14 +25,14 @@ async def main():
     api = EnedisByPDL(pdl=PDL, token=TOKEN)
 
     try:
-        start = (datetime.now() - timedelta(days=7)).strftime("%Y-%m-%d")
-        end = datetime.now().strftime("%Y-%m-%d")
-        datas = await api.async_fetch_datas("consumption", start, end)
+        start = (datetime.now() - timedelta(days=7))
+        end = datetime.now()
+        datas = await api.async_fetch_datas("consumption", start, end, PDL)
         # datas = await api.async_fetch_datas("consumption_load_curve", start, end)
         # datas = await api.async_get_contract()
         # datas = await api.async_get_addresses()
         logger.info(datas)
-    except EnedisLimitReached as error:
+    except EnedisException as error:
         logger.error(error)
 
     await api.async_close()
