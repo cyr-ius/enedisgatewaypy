@@ -1,9 +1,13 @@
 # -*- coding:utf-8 -*-
 
-"""Provides authentification and row access to Enedis Gateway website."""
+"""enedisgatewaypy package."""
 from .enedisgateway import EnedisGateway, EnedisByPDL
 from .exceptions import EnedisException, LimitReached, GatewayException
 
-name = "EnedisGateway"
-__version__ = "1.3"
-__all__ = ["EnedisGateway", "EnedisByPDL", "EnedisException", "LimitReached", "GatewayException"]
+__all__ = [
+    "EnedisGateway",
+    "EnedisByPDL",
+    "EnedisException",
+    "LimitReached",
+    "GatewayException"
+]
